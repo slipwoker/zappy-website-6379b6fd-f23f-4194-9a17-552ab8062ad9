@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>fox nation christmas at the greenbrier — MOVIE FOX</title>
+    <meta name="description" content="Dive into MOVIE FOX, your premium Netflix-style destination for movies and TV. Explore fox nation christmas at the greenbrier and beyond. Start watching now.">
+    <meta name="keywords" content="MOVIE FOX, fox nation christmas at the greenbrier, movie streaming, trending movies, cinematic experience">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '6379b6fd-f23f-4194-9a17-552ab8062ad9',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="fox nation christmas at the greenbrier — MOVIE FOX">
+    <meta property="og:description" content="Dive into MOVIE FOX, your premium Netflix-style destination for movies and TV. Explore fox nation christmas at the greenbrier and beyond. Start watching now.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="fox nation christmas at the greenbrier — MOVIE FOX">
+    <meta name="twitter:description" content="Dive into MOVIE FOX, your premium Netflix-style destination for movies and TV. Explore fox nation christmas at the greenbrier and beyond. Start watching now.">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="mobile-lang-menu-deployed-css">
+    @media (max-width: 768px) {
+      .lang-switcher,
+      .nav-cta-container .lang-switcher,
+      .nav-container .lang-switcher,
+      .navbar .lang-switcher,
+      .navbar .nav-cta-container .lang-switcher,
+      .nav-icons-left .lang-switcher,
+      .nav-ecommerce-icons .lang-switcher { display: none !important; }
+      .mobile-lang-menu { width: 100%; border-top: 1px solid rgba(128,128,128,0.2); padding: 8px 0 0 0; margin-top: 8px; }
+      .mobile-lang-toggle { display: flex !important; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; background: none; border: none; cursor: pointer; font-size: 15px; color: inherit; font-family: inherit; }
+      .mobile-lang-toggle::after { content: ''; display: inline-block; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 0.3s ease; margin-left: 8px; }
+      .mobile-lang-toggle.expanded::after { transform: rotate(-135deg); }
+      .mobile-lang-options { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+      .mobile-lang-options.expanded { max-height: 300px; }
+      .mobile-lang-option { display: flex !important; align-items: center; gap: 10px; padding: 10px 24px; text-decoration: none; color: inherit; font-size: 14px; font-family: inherit; }
+      .mobile-lang-option:hover { background: rgba(128,128,128,0.1); }
+      .mobile-lang-option.active { font-weight: 600; opacity: 0.7; pointer-events: none; }
+      .mobile-lang-option img { width: 20px; height: 20px; border-radius: 50%; }
+    }
+    @media (min-width: 769px) {
+      .mobile-lang-menu { display: none !important; }
+    }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      #mic-access-tool-general-button, .mic-access-tool-general-button,
+      #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+      ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+      #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+        display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+      }
+    </style>
+</head>
+<body>
+
+  <nav class="navbar">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/movie-fox-general-logo.webp" alt="MOVIE FOX" class="logo">
+      </a>
+    </div>
+
+    <ul class="nav-menu" id="navMenu"><li><a href="/browse">Browse Library</a></li><li><a href="/favorites">Favorites Lounge</a></li></ul>
+
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">Contact</a>
+    </div>
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '50%', 'important');
+          mobileToggle.style.setProperty('transform', 'translateY(-50%)', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '50%', 'important');
+          phoneBtn.style.setProperty('transform', 'translateY(-50%)', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu on button click - use newToggle now
+    newToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = this.querySelector('.hamburger-icon');
+      const closeIcon = this.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    });
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // === WHATSAPP BUTTON VISIBILITY FIX ===
+    // Ensure WhatsApp floating button is hidden on desktop and visible on mobile
+    // IMPORTANT: Only target the floating button by its class, NOT generic wa.me links
+    const handleWhatsAppVisibility = function() {
+      const whatsappBtn = document.querySelector('.whatsapp-float');
+      if (whatsappBtn) {
+        const isDesktop = window.innerWidth >= 769;
+        if (isDesktop) {
+          whatsappBtn.style.setProperty('display', 'none', 'important');
+          whatsappBtn.style.setProperty('visibility', 'hidden', 'important');
+          whatsappBtn.style.setProperty('opacity', '0', 'important');
+          whatsappBtn.style.setProperty('pointer-events', 'none', 'important');
+          console.log('[WhatsApp] Button hidden on desktop');
+        } else {
+          whatsappBtn.style.removeProperty('display');
+          whatsappBtn.style.removeProperty('visibility');
+          whatsappBtn.style.removeProperty('opacity');
+          whatsappBtn.style.removeProperty('pointer-events');
+          console.log('[WhatsApp] Button visible on mobile');
+        }
+      }
+    };
+    
+    // Run on load
+    handleWhatsAppVisibility();
+    
+    // Run on resize with debouncing
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleWhatsAppVisibility, 100);
+    });
+  });
+})();
+
+</script>
+  
+  <main>
+    <section class="home-hero-section" data-layout-spec="Home-hero" data-hero-type="fullscreen-scrim">
+  <!-- Background Image Layer -->
+  <div class="home-hero-bg-wrap">
+    <img data-hero-bg="true" data-placeholder="home-hero-image-1" data-context="Cinematic premium home cinema room at night: a large OLED TV glowing with warm amber light casting soft shadows across a plush dark velvet sofa, dim atmospheric lighting, subtle poster wall visible in background, cozy intimate lounge atmosphere, dusty blue and amber tones, bokeh depth, ultra-high quality photography, no people, premium movie night ambience" src="/assets/site-home-hero-image-1.webp" alt="Premium cinematic home viewing lounge with warm ambient lighting" class="home-hero-bg-img" width="1400" height="800">
+  </div>
+
+  <!-- Scrim Overlay -->
+  <div class="home-hero-scrim" aria-hidden="true"></div>
+
+  <!-- Decorative ambient bloom -->
+  <div class="home-hero-bloom home-hero-bloom--amber" aria-hidden="true"></div>
+  <div class="home-hero-bloom home-hero-bloom--blue" aria-hidden="true"></div>
+
+  <!-- Content -->
+  <div class="home-hero-container">
+    <div class="home-hero-overlay-card">
+
+      <!-- Eyebrow label -->
+      <span class="home-hero-eyebrow">🎬 MOVIE FOX</span>
+
+      <h1 class="home-hero-h1">Your Warm, Curated World of <em class="home-hero-serif-accent">Movies</em> and Series.</h1>
+
+      <h3 class="home-hero-subtitle">Discover blockbuster hits, indie gems, family-night picks, and binge-worthy series in a premium trailer-first browsing experience.</h3>
+
+      <!-- Content cue chips -->
+      <div class="home-hero-chips">
+        <span class="home-hero-chip">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3"></rect><path d="M8 12h8M12 8v8"></path></svg>
+          150+ titles across movies and series
+        </span>
+        <span class="home-hero-chip">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Trailer previews for every pick
+        </span>
+        <span class="home-hero-chip">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          Thoughtful shelves for every mood
+        </span>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="home-hero-ctas">
+        <a href="/browse" class="home-hero-btn home-hero-btn--primary">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="15" rx="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+          Explore the Library
+        </a>
+        <a href="/favorites" class="home-hero-btn home-hero-btn--secondary">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          View Favorites Lounge
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Divider: hero to creamy discovery section -->
+  <div class="home-hero-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1400 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,48 Q70,38 140,46 T280,40 Q350,46 420,36 T560,42 Q630,36 700,44 T840,38 Q910,44 980,36 T1120,42 Q1190,36 1260,44 T1400,40 L1400,90 Z" fill="#F5EFE6"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="home-showcase-section" data-layout-spec="Home-showcase">
+  <div class="home-showcase-container">
+
+    <!-- Section Header -->
+    <div class="home-showcase-header">
+      <div class="home-showcase-eyebrow">
+        <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:6px;">
+          <path d="M12 2C12 2 8 7 8 11C8 13.2 9.8 15 12 15C14.2 15 16 13.2 16 11C16 7 12 2 12 2Z" fill="#C96A4A"></path>
+          <path d="M12 15C9.8 15 8 16.8 8 19C8 21.2 9.8 23 12 23C14.2 23 16 21.2 16 19C16 15 12 15 12 15Z" fill="#C96A4A" opacity="0.5"></path>
+        </svg>
+        <span>Curated for Every Mood</span>
+      </div>
+      <h2 class="home-showcase-title">Browse by Mood,<br><em>Not Just Genre.</em></h2>
+      <p class="home-showcase-intro">Whether it's a quiet evening with the family, a late-night thriller marathon, or discovering a hidden indie gem — MOVIE FOX curates every shelf with warmth and intention. This is your boutique cinema lounge, always open.</p>
+    </div>
+
+    <!-- Shelf 1: Trending Now -->
+    <div class="home-showcase-shelf">
+      <div class="home-showcase-shelf-header">
+        <div class="home-showcase-shelf-accent" aria-hidden="true"></div>
+        <h3 class="home-showcase-shelf-title">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;">
+            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#C96A4A"></path>
+          </svg>
+          Trending Now
+        </h3>
+        <div class="home-showcase-shelf-line"></div>
+      </div>
+      <div class="home-showcase-grid">
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-1" data-context="Cinematic movie poster for Avengers Endgame, dramatic superhero ensemble art with warm golden tones and heroic composition for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-1.webp" alt="Avengers: Endgame movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Avengers: Endgame trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Avengers: Endgame</h3>
+            <p class="home-showcase-card-teaser">The ultimate Marvel epic where heroes make their last stand.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-2" data-context="Cinematic movie poster for Dune 2021, vast desert landscape with a lone figure in dramatic sci-fi composition, warm amber and sand color palette for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-2.webp" alt="Dune movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Dune trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Dune</h3>
+            <p class="home-showcase-card-teaser">An epic sci-fi odyssey across desert worlds and destiny.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-3" data-context="TV series poster for Stranger Things, retro 80s horror adventure with glowing title and silhouetted children on bikes, dark atmospheric for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-3.webp" alt="Stranger Things TV series poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Stranger Things trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Stranger Things</h3>
+            <p class="home-showcase-card-teaser">A supernatural small-town mystery that grips from episode one.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-4" data-context="Movie poster for Inception, surreal cityscape folding in on itself with dramatic blue and grey tones, mind-bending sci-fi art for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-4.webp" alt="Inception movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Inception trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Inception</h3>
+            <p class="home-showcase-card-teaser">A mind-bending sci-fi classic that rewrote cinema's rules.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-5" data-context="TV series poster for The Boys, dark satirical superhero drama with gritty urban art, bold red and black tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-5.webp" alt="The Boys TV series poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch The Boys trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">The Boys</h3>
+            <p class="home-showcase-card-teaser">Superheroes gone rogue — a darkly comic takedown of power.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Shelf 2: Family Night -->
+    <div class="home-showcase-shelf">
+      <div class="home-showcase-shelf-header">
+        <div class="home-showcase-shelf-accent" aria-hidden="true"></div>
+        <h3 class="home-showcase-shelf-title">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;">
+            <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z" fill="#C96A4A" opacity="0.7"></path>
+          </svg>
+          Family Night
+        </h3>
+        <div class="home-showcase-shelf-line"></div>
+      </div>
+      <div class="home-showcase-grid">
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-6" data-context="Animated movie poster for Frozen, magical icy kingdom with princess characters in warm and cool color contrast, family friendly art for a premium streaming platform" width="300" height="450" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF0083;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FF008320;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial, sans-serif' font-size='18' fill='white' text-anchor='middle' dy='.3em' font-weight='500'%3EFrozen%20animated%20movie%20poster%3C/text%3E%3C/svg%3E" alt="Frozen animated movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Frozen trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Frozen</h3>
+            <p class="home-showcase-card-teaser">A heartfelt animated favorite that melts every age group.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-7" data-context="Animated movie poster for Toy Story, colorful toys coming to life with warm nostalgic art, Woody and Buzz Lightyear in playful composition for a premium streaming platform" width="300" height="450" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF0083;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FF008320;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial, sans-serif' font-size='18' fill='white' text-anchor='middle' dy='.3em' font-weight='500'%3EToy%20Story%20animated%20movie%20poster%3C/text%3E%3C/svg%3E" alt="Toy Story animated movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Toy Story trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Toy Story</h3>
+            <p class="home-showcase-card-teaser">The beloved Pixar classic that started a legendary franchise.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-8" data-context="Animated movie poster for The Lion King, majestic African savanna with lion silhouette at sunrise, rich golden and amber tones for a premium streaming platform" width="300" height="450" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF0083;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FF008320;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial, sans-serif' font-size='18' fill='white' text-anchor='middle' dy='.3em' font-weight='500'%3EThe%20Lion%20King%20movie%20poster%3C/text%3E%3C/svg%3E" alt="The Lion King movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch The Lion King trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">The Lion King</h3>
+            <p class="home-showcase-card-teaser">An unforgettable story of courage, loss, and coming home.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-9" data-context="TV series poster for Wednesday, gothic school comedy with pale protagonist in black dress, moody dark academy aesthetic for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-9.webp" alt="Wednesday TV series poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Wednesday trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Wednesday</h3>
+            <p class="home-showcase-card-teaser">Darkly witty and endlessly watchable for older kids and adults.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-10" data-context="Movie poster for Spider-Man No Way Home, multiple Spider-Men in dynamic action poses with glowing multiverse portal background, vibrant superhero art for a premium streaming platform" width="300" height="450" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF0083;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FF008320;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial, sans-serif' font-size='18' fill='white' text-anchor='middle' dy='.3em' font-weight='500'%3ESpider-Man%3A%20No%20Way%20Home%20movie%20poster%3C/text%3E%3C/svg%3E" alt="Spider-Man: No Way Home movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Spider-Man: No Way Home trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Spider-Man: No Way Home</h3>
+            <p class="home-showcase-card-teaser">A multiverse adventure the whole family will cheer for.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Shelf 3: Late-Night Thrillers -->
+    <div class="home-showcase-shelf">
+      <div class="home-showcase-shelf-header">
+        <div class="home-showcase-shelf-accent" aria-hidden="true"></div>
+        <h3 class="home-showcase-shelf-title">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" fill="#7C93B7"></path>
+          </svg>
+          Late-Night Thrillers
+        </h3>
+        <div class="home-showcase-shelf-line"></div>
+      </div>
+      <div class="home-showcase-grid">
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-11" data-context="Movie poster for The Dark Knight, dramatic Batman silhouette against burning city skyline with dark blue and orange tones, iconic noir superhero art for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-11.webp" alt="The Dark Knight movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch The Dark Knight trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">The Dark Knight</h3>
+            <p class="home-showcase-card-teaser">Nolan's masterpiece — chaos and order collide in Gotham.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-12" data-context="Movie poster for Shutter Island, dark psychological thriller with isolated island asylum in stormy weather, moody atmospheric art for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-12.webp" alt="Shutter Island movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Shutter Island trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Shutter Island</h3>
+            <p class="home-showcase-card-teaser">A twisting psychological thriller that haunts long after viewing.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-13" data-context="TV series poster for Black Mirror, dystopian technology horror anthology with cracked screen motif, cold blue and white tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-13.webp" alt="Black Mirror TV series poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Black Mirror trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Black Mirror</h3>
+            <p class="home-showcase-card-teaser">Unsettling visions of tech gone wrong — binge at your own risk.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-14" data-context="TV series poster for Dark German thriller, time travel mystery with dark forest and clock motif, muted grey and green tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-14.webp" alt="Dark TV series poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Dark trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Dark</h3>
+            <p class="home-showcase-card-teaser">A labyrinthine time-travel mystery from the heart of Germany.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-15" data-context="Movie poster for Fight Club, gritty underground boxing aesthetic with bruised male figures and dark red tones, raw and intense art for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-15.webp" alt="Fight Club movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Fight Club trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Fight Club</h3>
+            <p class="home-showcase-card-teaser">The first rule? You already know. A cult thriller like no other.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Shelf 4: Indie Spotlight -->
+    <div class="home-showcase-shelf home-showcase-shelf--last">
+      <div class="home-showcase-shelf-header">
+        <div class="home-showcase-shelf-accent" aria-hidden="true"></div>
+        <h3 class="home-showcase-shelf-title">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#C96A4A" opacity="0.8"></polygon>
+          </svg>
+          Indie Spotlight
+        </h3>
+        <div class="home-showcase-shelf-line"></div>
+      </div>
+      <div class="home-showcase-grid">
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-16" data-context="Movie poster for The Godfather, classic mafia drama with shadowy figure and puppet strings, rich sepia and dark tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-16.webp" alt="The Godfather movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch The Godfather trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">The Godfather</h3>
+            <p class="home-showcase-card-teaser">The definitive crime epic — still unmatched after five decades.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-17" data-context="TV series poster for Sherlock BBC, modern detective drama with stylized London cityscape and silhouetted detective figure, elegant blue and grey tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-17.webp" alt="Sherlock TV series poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Sherlock trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Sherlock</h3>
+            <p class="home-showcase-card-teaser">A razor-sharp modern reimagining of the world's greatest detective.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-18" data-context="Movie poster for Interstellar, astronaut floating in space with wormhole and cosmic light, vast deep blue and gold tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-18.webp" alt="Interstellar movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Interstellar trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Interstellar</h3>
+            <p class="home-showcase-card-teaser">An awe-inspiring journey through space, time, and fatherhood.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-19" data-context="TV series poster for Breaking Bad, desert landscape with chemistry teacher transformed into kingpin, muted green and yellow tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-19.webp" alt="Breaking Bad TV series poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Breaking Bad trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Breaking Bad</h3>
+            <p class="home-showcase-card-teaser">Television's greatest transformation story — bar none.</p>
+          </div>
+        </article>
+        <article class="home-showcase-card">
+          <div class="home-showcase-poster-wrap">
+            <img data-placeholder="home-showcase-image-20" data-context="Movie poster for Joker 2019, lone figure in clown makeup descending stairs in urban decay, dramatic red and gold tones for a premium streaming platform" width="300" height="450" src="/assets/site-home-showcase-image-20.webp" alt="Joker movie poster" class="home-showcase-poster">
+            <div class="home-showcase-card-overlay">
+              <button class="home-showcase-btn-trailer" aria-label="Watch Joker trailer"><i class="fa fa-play"></i> Trailer</button>
+            </div>
+          </div>
+          <div class="home-showcase-card-info">
+            <h3 class="home-showcase-card-title">Joker</h3>
+            <p class="home-showcase-card-teaser">A haunting character study that redefined the comic-book film.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom torn-paper divider transitioning to darker editorial panel -->
+  <div class="home-showcase-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,44 Q30,38 60,46 T120,40 Q160,35 200,44 T280,38 Q320,42 360,36 T440,43 Q480,38 520,46 T600,39 Q640,44 680,37 T760,43 Q800,38 840,45 T920,39 Q960,44 1000,37 T1080,43 Q1120,38 1160,45 T1240,40 Q1280,44 1320,38 T1400,44 L1440,46 L1440,90 Z" fill="#171412"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="home-features-section" data-layout-spec="Home-features">
+  <div class="home-features-container">
+
+    <!-- Section Header -->
+    <div class="home-features-header">
+      <p class="home-features-eyebrow">
+        <span class="home-features-flame" aria-hidden="true">
+          <svg data-no-icon-edit="true" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 2C10 2 7 6 7 9.5C7 11.4 8.1 13 10 13C11.9 13 13 11.4 13 9.5C13 8 12 6.5 12 6.5C12 6.5 14 8 14 11C14 14.3 12.2 17 10 17C7.8 17 6 14.3 6 11C6 7 10 2 10 2Z" fill="#C96A4A"></path></svg>
+        </span>
+        Platform Experience
+      </p>
+      <h2 class="home-features-title">Built for <em class="home-features-serif">Effortless</em> Browsing.</h2>
+      <p class="home-features-subtitle">The catalog includes 150+ recognizable movies and series across major genres — from blockbuster action to indie drama, family favorites to edge-of-your-seat thrillers.</p>
+    </div>
+
+    <!-- Feature Cards Grid -->
+    <div class="home-features-grid">
+
+      <!-- Card 1: Real-Time Discovery -->
+      <article class="home-features-card">
+        <div class="home-features-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M18 18L23 23" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <div class="home-features-card-body">
+          <h3 class="home-features-card-title">Real-Time Discovery</h3>
+          <p class="home-features-card-desc">Search across the full MOVIE FOX catalog instantly — movies and TV shows surface as you type, filtered by title, genre, or keyword. No waiting, no reloads.</p>
+        </div>
+        <div class="home-features-mockup home-features-mockup--search">
+          <div class="hfm-search-bar">
+            <svg data-no-icon-edit="true" aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4" stroke="#7C93B7" stroke-width="1.5"></circle><path d="M10 10L13 13" stroke="#7C93B7" stroke-width="1.5" stroke-linecap="round"></path></svg>
+            <span class="hfm-search-text">Inception</span>
+            <span class="hfm-cursor"></span>
+          </div>
+          <div class="hfm-results">
+            <div class="hfm-result-item hfm-result-active">
+              <img data-placeholder="home-features-image-1" data-context="Cinematic movie poster thumbnail for Inception, dark surreal architecture dreamscape, premium streaming platform UI mockup" width="32" height="48" src="/assets/site-home-features-image-1.webp" alt="Inception poster thumbnail">
+              <div class="hfm-result-info">
+                <span class="hfm-result-title">Inception</span>
+                <span class="hfm-result-meta">2010 · Sci-Fi</span>
+              </div>
+              <span class="hfm-result-badge">Movie</span>
+            </div>
+            <div class="hfm-result-item">
+              <img data-placeholder="home-features-image-2" data-context="Cinematic movie poster thumbnail for Interstellar, space wormhole cosmic visual, premium streaming platform UI mockup" width="32" height="48" src="/assets/site-home-features-image-2.webp" alt="Interstellar poster thumbnail">
+              <div class="hfm-result-info">
+                <span class="hfm-result-title">Interstellar</span>
+                <span class="hfm-result-meta">2014 · Drama</span>
+              </div>
+              <span class="hfm-result-badge">Movie</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Trailer-First Previews -->
+      <article class="home-features-card">
+        <div class="home-features-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="5" width="22" height="18" rx="3" stroke="currentColor" stroke-width="2"></rect>
+            <path d="M11 10L19 14L11 18V10Z" fill="currentColor"></path>
+          </svg>
+        </div>
+        <div class="home-features-card-body">
+          <h3 class="home-features-card-title">Trailer-First Previews</h3>
+          <p class="home-features-card-desc">Before you commit to a title, open the official trailer in a full popup modal. Watch, decide, and discover — all without leaving your browsing flow.</p>
+        </div>
+        <div class="home-features-mockup home-features-mockup--trailer">
+          <div class="hfm-trailer-frame">
+            <img data-placeholder="home-features-image-3" data-context="Cinematic movie still from The Dark Knight, Batman silhouette against a burning city at night, dramatic lighting, streaming platform trailer preview mockup" width="280" height="140" src="/assets/site-home-features-image-3.webp" alt="Trailer preview mockup for The Dark Knight">
+            <div class="hfm-trailer-overlay">
+              <button class="hfm-play-btn" aria-label="Play trailer">
+                <svg data-no-icon-edit="true" aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="rgba(201,106,74,0.9)"></circle><path d="M8 7L14 10L8 13V7Z" fill="white"></path></svg>
+              </button>
+              <span class="hfm-trailer-label">Watch Trailer</span>
+            </div>
+            <div class="hfm-trailer-close" aria-hidden="true">✕</div>
+          </div>
+          <div class="hfm-trailer-meta">
+            <span class="hfm-trailer-title">The Dark Knight</span>
+            <span class="hfm-trailer-year">2008 · Action</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Personal Favorites Lounge -->
+      <article class="home-features-card">
+        <div class="home-features-icon-wrap">
+          <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 22L6.5 14.5C5 13 5 10.5 6.5 9C8 7.5 10.5 7.5 12 9L14 11L16 9C17.5 7.5 20 7.5 21.5 9C23 10.5 23 13 21.5 14.5L14 22Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <div class="home-features-card-body">
+          <h3 class="home-features-card-title">Personal Favorites Lounge</h3>
+          <p class="home-features-card-desc">Save any title to your personal Favorites Lounge and revisit it anytime. Your list persists across sessions so your next movie night is always ready.</p>
+        </div>
+        <div class="home-features-mockup home-features-mockup--favorites">
+          <div class="hfm-fav-header">
+            <svg data-no-icon-edit="true" aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 11L3 7.5C2.2 6.7 2.2 5.4 3 4.6C3.8 3.8 5.1 3.8 5.9 4.6L7 5.7L8.1 4.6C8.9 3.8 10.2 3.8 11 4.6C11.8 5.4 11.8 6.7 11 7.5L7 11Z" fill="#C96A4A"></path></svg>
+            <span>My Favorites</span>
+            <span class="hfm-fav-count">4 titles</span>
+          </div>
+          <div class="hfm-fav-row">
+            <img data-placeholder="home-features-image-4" data-context="Cinematic movie poster thumbnail for Stranger Things TV series, dark atmospheric upside-down world with glowing red letters, streaming platform favorites list UI mockup" width="36" height="54" src="/assets/site-home-features-image-4.webp" alt="Stranger Things poster thumbnail">
+            <img data-placeholder="home-features-image-5" data-context="Cinematic movie poster thumbnail for Breaking Bad TV series, dramatic chemistry teacher transformation, dark desert tones, streaming platform favorites list UI mockup" width="36" height="54" src="/assets/site-home-features-image-5.webp" alt="Breaking Bad poster thumbnail">
+            <img data-placeholder="home-features-image-6" data-context="Cinematic movie poster thumbnail for Dune 2021 film, epic desert landscape with giant sandworm, golden tones, streaming platform favorites list UI mockup" width="36" height="54" src="/assets/site-home-features-image-6.webp" alt="Dune poster thumbnail">
+            <div class="hfm-fav-more">+1</div>
+          </div>
+          <div class="hfm-fav-note">Stored locally · Always available</div>
+        </div>
+      </article>
+
+    </div>
+    <!-- End Grid -->
+
+  </div>
+
+  <!-- Bottom Diagonal Glow Divider -->
+  <div class="home-features-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hf-glow-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(201,106,74,0.08)"></stop>
+          <stop offset="50%" stop-color="rgba(124,147,183,0.10)"></stop>
+          <stop offset="100%" stop-color="rgba(201,106,74,0.06)"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,90 L0,55 L1440,20 L1440,90 Z" fill="#FAF7F4"></path>
+      <path d="M0,90 L0,58 L1440,23 L1440,90 Z" fill="#FAF7F4" opacity="0.7"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="home-gallery-section" data-layout-spec="Home-gallery">
+  <div class="home-gallery-container">
+
+    <!-- Section Header -->
+    <div class="home-gallery-header">
+      <span class="home-gallery-eyebrow">Our Collection</span>
+      <h2 class="home-gallery-title">A Library That Feels <em>Familiar</em> and Fresh.</h2>
+      <p class="home-gallery-subtitle">From iconic blockbusters and acclaimed television to indie gems and crowd-pleasing family classics — MOVIE FOX brings you a curated universe of stories worth watching, all in one place.</p>
+    </div>
+
+    <!-- Poster Mosaic -->
+    <div class="home-gallery-mosaic">
+
+      <!-- LEFT: Two large spotlight tiles -->
+      <div class="home-gallery-spotlight">
+        <figure class="home-gallery-spotlight-tile home-gallery-spotlight-tile--large">
+          <div class="home-gallery-poster-wrap">
+            <img data-placeholder="home-gallery-image-1" data-context="Official movie poster for Avengers Endgame — Marvel superhero ensemble cast standing heroically with dramatic cosmic sky background, bold cinematic typography, warm orange and gold tones" width="300" height="450" src="/assets/site-home-gallery-image-1.webp" alt="Avengers: Endgame movie poster">
+            <div class="home-gallery-poster-overlay">
+              <span class="home-gallery-poster-badge">Marvel</span>
+            </div>
+          </div>
+          <figcaption class="home-gallery-caption">
+            <span class="home-gallery-caption-title">Avengers: Endgame</span>
+            <span class="home-gallery-caption-meta">Action · 2019</span>
+          </figcaption>
+        </figure>
+
+        <figure class="home-gallery-spotlight-tile home-gallery-spotlight-tile--medium">
+          <div class="home-gallery-poster-wrap">
+            <img data-placeholder="home-gallery-image-2" data-context="Official movie poster for Inception — Christopher Nolan thriller showing a city folding in on itself, dreamlike surreal architecture, cool blue and grey tones, Leonardo DiCaprio" width="300" height="450" src="/assets/site-home-gallery-image-2.webp" alt="Inception movie poster">
+            <div class="home-gallery-poster-overlay">
+              <span class="home-gallery-poster-badge">Sci-Fi</span>
+            </div>
+          </div>
+          <figcaption class="home-gallery-caption">
+            <span class="home-gallery-caption-title">Inception</span>
+            <span class="home-gallery-caption-meta">Sci-Fi · 2010</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- RIGHT: Dense matrix of smaller posters -->
+      <div class="home-gallery-matrix">
+
+        <div class="home-gallery-matrix-row">
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-3" data-context="Official movie poster for The Dark Knight — Batman silhouette against burning Gotham city skyline, dark moody blues and oranges, Heath Ledger Joker presence implied" width="180" height="270" src="/assets/site-home-gallery-image-3.webp" alt="The Dark Knight movie poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">The Dark Knight</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-4" data-context="Official movie poster for Dune — vast desert landscape with giant sandworm, epic sci-fi scale, warm amber and gold tones, Timothee Chalamet in desert robes" width="180" height="270" src="/assets/site-home-gallery-image-4.webp" alt="Dune movie poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Dune</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-5" data-context="Official TV series poster for Stranger Things — group of kids with bikes in dark atmospheric forest, glowing upside down realm, retro 80s horror aesthetic, red and dark blue tones" width="180" height="270" src="/assets/site-home-gallery-image-5.webp" alt="Stranger Things series poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Stranger Things</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-6" data-context="Official TV series poster for Breaking Bad — Walter White in desert hazmat suit with intense expression, meth lab equipment, dramatic yellow and brown tones" width="180" height="270" src="/assets/site-home-gallery-image-6.webp" alt="Breaking Bad series poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Breaking Bad</figcaption>
+          </figure>
+        </div>
+
+        <div class="home-gallery-matrix-row">
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-7" data-context="Official TV series poster for The Witcher — Geralt of Rivia with white hair and dual swords in a dark fantasy forest, moody atmospheric lighting, green and grey tones" width="180" height="270" src="/assets/site-home-gallery-image-7.webp" alt="The Witcher series poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">The Witcher</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-8" data-context="Official TV series poster for Friends — six young adults laughing together in a cozy New York apartment, warm yellow and orange tones, 90s sitcom energy" width="180" height="270" src="/assets/site-home-gallery-image-8.webp" alt="Friends TV series poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Friends</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-9" data-context="Official TV series poster for Black Mirror — ominous dark reflective screen showing distorted human face, tech dystopia aesthetic, cold blue and black tones" width="180" height="270" src="/assets/site-home-gallery-image-9.webp" alt="Black Mirror series poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Black Mirror</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-10" data-context="Official animated movie poster for Frozen — Elsa in her ice palace with magical ice powers, Anna beside her, snowy mountain backdrop, cool blue and white tones, Disney animated style" width="180" height="270" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='270'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF0083;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FF008320;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial, sans-serif' font-size='18' fill='white' text-anchor='middle' dy='.3em' font-weight='500'%3EFrozen%20animated%20movie%20poster%3C/text%3E%3C/svg%3E" alt="Frozen animated movie poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Frozen</figcaption>
+          </figure>
+        </div>
+
+        <div class="home-gallery-matrix-row">
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-11" data-context="Official animated movie poster for Toy Story — Woody the cowboy and Buzz Lightyear toys side by side against a sunny sky, Pixar animated style, warm yellow and blue tones" width="180" height="270" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='270'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF0083;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FF008320;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial, sans-serif' font-size='18' fill='white' text-anchor='middle' dy='.3em' font-weight='500'%3EToy%20Story%20animated%20movie%20poster%3C/text%3E%3C/svg%3E" alt="Toy Story animated movie poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Toy Story</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-12" data-context="Official movie poster for The Godfather — Marlon Brando as Don Corleone in dramatic shadow with a puppet string motif, classic 1970s cinema, dark sepia and black tones" width="180" height="270" src="/assets/site-home-gallery-image-12.webp" alt="The Godfather movie poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">The Godfather</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile home-gallery-matrix-tile--accent">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-13" data-context="Official movie poster for Interstellar — astronaut in space suit standing before a massive wormhole in deep space, awe-inspiring cosmic scale, dark blue and golden light tones" width="180" height="270" src="/assets/site-home-gallery-image-13.webp" alt="Interstellar movie poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Interstellar</figcaption>
+          </figure>
+
+          <figure class="home-gallery-matrix-tile">
+            <div class="home-gallery-poster-wrap">
+              <img data-placeholder="home-gallery-image-14" data-context="Official movie poster for Joker — Joaquin Phoenix as Arthur Fleck in full Joker clown makeup and red suit descending stairs in Gotham, dramatic neon lighting, red and gold tones" width="180" height="270" src="/assets/site-home-gallery-image-14.webp" alt="Joker movie poster">
+            </div>
+            <figcaption class="home-gallery-matrix-caption">Joker</figcaption>
+          </figure>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Genre Chips Strip -->
+    <div class="home-gallery-genres">
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Action</span>
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-face-laugh" aria-hidden="true"></i> Comedy</span>
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-masks-theater" aria-hidden="true"></i> Drama</span>
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-ghost" aria-hidden="true"></i> Horror</span>
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-rocket" aria-hidden="true"></i> Sci-Fi</span>
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-heart" aria-hidden="true"></i> Romance</span>
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-tv" aria-hidden="true"></i> TV Series</span>
+      <span class="home-gallery-genre-chip"><i class="fa-solid fa-star" aria-hidden="true"></i> Family</span>
+    </div>
+
+    <!-- Supporting Paragraph -->
+    <div class="home-gallery-description">
+      <p>Whether you're in the mood for a Marvel spectacle, a slow-burn crime drama, a heartwarming animated classic, or a mind-bending sci-fi epic — MOVIE FOX has it all. Our library spans iconic blockbusters, acclaimed television, indie discoveries, and family favourites, giving every viewer their perfect movie night.</p>
+    </div>
+
+  </div>
+
+  <!-- Bottom Divider: terracotta-to-espresso gradient fade with curved edge -->
+  <div class="home-gallery-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1280 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="galleryDividerGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#C96A4A"></stop>
+          <stop offset="50%" stop-color="#3A2820"></stop>
+          <stop offset="100%" stop-color="#171412"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,90 L0,55 Q160,30 320,48 T640,38 Q800,28 960,46 T1280,36 L1280,90 Z" fill="var(--bg-dark)"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="home-cta-section" data-layout-spec="Home-cta">
+  <div class="home-cta-outer">
+    <div class="home-cta-inner">
+      <div class="home-cta-glow" aria-hidden="true"></div>
+      <div class="home-cta-content">
+        <h2 class="home-cta-heading">Start Your Next <em>Watchlist.</em></h2>
+        <p class="home-cta-body">Explore a polished trailer-first catalog built for discovering tonight's film, planning the weekend binge, or saving favorites for later — your personal MOVIE FOX guide to what's worth watching.</p>
+        <div class="home-cta-buttons">
+          <a href="/browse" class="home-cta-btn-primary">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="15" rx="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+            Browse All Titles
+          </a>
+          <a href="/contact" class="home-cta-btn-secondary">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Contact MOVIE FOX
+          </a>
+        </div>
+        <p class="home-cta-trust">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Movie and series discovery platform only — no direct streaming or content hosting.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer"><div class="footer-container"><div class="footer-top"><div class="footer-col footer-brand"><div class="footer-logo-wrap"><img src="/assets/movie-fox-general-logo.webp" alt="MOVIE FOX" class="logo"></div><p class="footer-tagline">Your curated destination for cinematic discovery. From indie gems to blockbuster nights — every frame, every mood, every story.</p><div class="footer-social"><a href="[facebook_handle]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="[instagram_handle]" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="[whatsapp_handle]" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a></div></div><div class="footer-col footer-nav"><h4 class="footer-heading"><span class="heading-accent"></span>Explore</h4><ul class="footer-links"><li><a href="/browse"><i class="fas fa-film"></i>Browse Library</a></li><li><a href="/favorites"><i class="fas fa-heart"></i>Favorites Lounge</a></li><li><a href="/contact"><i class="fas fa-paper-plane"></i>Contact</a></li></ul></div><div class="footer-col footer-contact-col"><h4 class="footer-heading"><span class="heading-accent"></span>Get in Touch</h4><ul class="footer-contact"><li><span class="contact-icon"><i class="fas fa-envelope"></i></span><span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span></li><li><span class="contact-icon"><i class="fas fa-phone"></i></span><span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span></li><li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span><span class="contact-text">[business_address]</span></a></li></ul></div><div class="footer-col footer-newsletter"><h4 class="footer-heading"><span class="heading-accent"></span>Movie Night Ready</h4><p class="newsletter-text">Stay in the loop with new arrivals, curated picks, and exclusive recommendations.</p><div class="newsletter-form"><input type="email" placeholder="Your email address" class="newsletter-input"><button class="newsletter-btn">Subscribe</button></div><div class="footer-badge"><i class="fas fa-shield-alt"></i><span>No spam. Unsubscribe anytime.</span></div></div></div><div class="footer-divider"></div><div class="footer-bottom"><p class="footer-copyright">© 2026 MOVIE FOX. All rights reserved.</p><div class="footer-legal"><a href="/privacy">Privacy Policy</a><span class="legal-sep">·</span><a href="/terms">Terms &amp; Conditions</a><span class="legal-sep">·</span><a href="/accessibility">Accessibility</a><span class="legal-sep">·</span><a href="https://zappy5.com" target="_blank" class="zappy-attribution">Generated by Zappy</a></div></div></div></footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+
+    <script id="zappy-mobile-lang-menu-script">
+    (function() {
+      function initMobileLangMenu() {
+        if (window.innerWidth > 768) {
+          var existingMenu = document.querySelector('.mobile-lang-menu');
+          if (existingMenu) existingMenu.remove();
+          return;
+        }
+        if (document.querySelector('.mobile-lang-menu')) return;
+        var switcher = document.querySelector('.lang-switcher');
+        if (!switcher) return;
+        var dropdown = switcher.querySelector('.lang-switcher-dropdown');
+        if (!dropdown) return;
+        var options = dropdown.querySelectorAll('.lang-option');
+        if (options.length === 0) return;
+        var navMenu = document.getElementById('navMenu') || document.querySelector('.nav-menu') || document.querySelector('nav ul');
+        if (!navMenu) return;
+        var currentLang = document.documentElement.lang || 'en';
+        var langConfigs = {
+          he: {name:'עברית',flag:'https://api.iconify.design/circle-flags/il.svg'},
+          en: {name:'English',flag:'https://api.iconify.design/circle-flags/us.svg'},
+          ar: {name:'العربية',flag:'https://api.iconify.design/circle-flags/sa.svg'},
+          fr: {name:'Français',flag:'https://api.iconify.design/circle-flags/fr.svg'},
+          es: {name:'Español',flag:'https://api.iconify.design/circle-flags/es.svg'},
+          de: {name:'Deutsch',flag:'https://api.iconify.design/circle-flags/de.svg'},
+          ru: {name:'Русский',flag:'https://api.iconify.design/circle-flags/ru.svg'},
+          zh: {name:'中文',flag:'https://api.iconify.design/circle-flags/cn.svg'},
+          ja: {name:'日本語',flag:'https://api.iconify.design/circle-flags/jp.svg'},
+          pt: {name:'Português',flag:'https://api.iconify.design/circle-flags/br.svg'},
+          it: {name:'Italiano',flag:'https://api.iconify.design/circle-flags/it.svg'},
+          ko: {name:'한국어',flag:'https://api.iconify.design/circle-flags/kr.svg'}
+        };
+        var container = document.createElement('div');
+        container.className = 'mobile-lang-menu';
+        var currentConfig = langConfigs[currentLang] || {name:currentLang,flag:''};
+        var toggleBtn = document.createElement('button');
+        toggleBtn.className = 'mobile-lang-toggle';
+        toggleBtn.type = 'button';
+        var currentFlagHtml = currentConfig.flag ? '<img src="' + currentConfig.flag + '" width="20" height="20" alt="" style="border-radius:50%;margin-right:8px;margin-left:8px;">' : '';
+        toggleBtn.innerHTML = currentFlagHtml + currentConfig.name;
+        container.appendChild(toggleBtn);
+        var optionsDiv = document.createElement('div');
+        optionsDiv.className = 'mobile-lang-options';
+        var currentLink = document.createElement('a');
+        currentLink.className = 'mobile-lang-option active';
+        currentLink.href = '#';
+        currentLink.innerHTML = currentFlagHtml + currentConfig.name;
+        optionsDiv.appendChild(currentLink);
+        options.forEach(function(opt) {
+          var link = document.createElement('a');
+          link.className = 'mobile-lang-option';
+          link.href = opt.getAttribute('href');
+          link.innerHTML = opt.innerHTML;
+          optionsDiv.appendChild(link);
+        });
+        container.appendChild(optionsDiv);
+        navMenu.appendChild(container);
+        toggleBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleBtn.classList.toggle('expanded');
+          optionsDiv.classList.toggle('expanded');
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileLangMenu); }
+      else { initMobileLangMenu(); }
+      window.addEventListener('resize', function() { clearTimeout(window._mlrt); window._mlrt = setTimeout(initMobileLangMenu, 250); });
+    })();
+    </script>
+</body>
+</html>
